@@ -40,9 +40,16 @@ body {
 
 .article-card-hover {
     transition: all 100ms ease-in;
-    cursor: pointer;
 }
 
     .article-card-hover:hover {
-        transform: scale(1.01)
+        transform: scale(1.005)
+    }
+
+.nav-item-hover {
+    transition: all 100ms ease-in !important;
+}
+
+    .nav-item-hover:hover {
+        color: #00838F !important;
     }
