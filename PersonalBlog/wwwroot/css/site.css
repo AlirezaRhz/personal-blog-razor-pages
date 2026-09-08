@@ -37,3 +37,12 @@ body {
     background-position: center;
     background-repeat: no-repeat;
 }
+
+.article-card-hover {
+    transition: all 100ms ease-in;
+    cursor: pointer;
+}
+
+    .article-card-hover:hover {
+        transform: scale(1.01)
+    }
