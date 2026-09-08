@@ -4,7 +4,8 @@
     ViewData["Title"] = "Articles";
 }
 @using PersonalBlog.Helpers
-
+<!-- Preload homepage background image (cool new thing) -->
+<link rel="preload" as="image" href="/images/homepage-background.jpg" />
 
 <div class="homepage pt-5">
     <section class="container mx-auto row row-cols-lg-3 g-3">
@@ -12,14 +13,14 @@
         {
             <div class="col">
                 <div class="bg-white card box-shadow article-card-hover">
-                    <img src="@article.ImageUrl" class="card-img-top" />
+                    <img src="@article.ImageUrl" class="card-img-top" alt="@article.Title" />
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <h5 class="card-title">@article.Title</h5>
                             <p class="text-muted">@PersianDateHelper.ToPersianDate(article.CreatedAt)</p>
                         </div>
                         <p class="card-text mt-1">@article.Description</p>
-                        <a class="btn btn-outline-primary" href="/Article/@article.Id">View Article</a>
+                        <a class="btn btn-outline-primary" href="/ArticleDetails/@article.Id">View Article</a>
                     </div>
                 </div>
             </div>
