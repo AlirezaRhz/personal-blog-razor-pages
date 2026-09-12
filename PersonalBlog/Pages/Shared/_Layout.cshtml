@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -14,7 +16,7 @@
 <body class="image">
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm bg-dark-subtle navbar-light border-bottom box-shadow">
-            <div class="container">
+            <div class="container d-flex justify-content-between align-items-center">
                 <a class="navbar-brand" asp-area="" asp-page="/Index">PersonalBlog</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,14 +25,48 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark nav-item-hover" asp-area="" asp-page="/Index">Home</a>
+                            <a class="nav-link text-dark nav-item-hover" asp-area="" asp-page="/Index">Homepage</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark nav-item-hover" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
                     </ul>
                 </div>
-            </div>
+                @if (!User.Identity!.IsAuthenticated)
+                    {
+                    <div class="d-flex justify-content-center align-items-center gap-3">
+                        <a class="d-inline-block btn btn-outline-primary" asp-area="Identity" asp-page="/Account/Register">Sign Up</a>
+                        <a class="d-inline-block btn btn-primary" asp-area="Identity" asp-page="/Account/Login">Log In</a>
+                    </div>
+                    }
+                    else if (User.IsInRole("Admin"))
+                    {
+                    <div class="dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Admin
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" asp-area="" asp-page="/Admin" >Admin Panel</a></li>
+                            <li><a class="dropdown-item" href="#">Create New Blog Post</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Logout" >Log out</a></li>
+                        </ul>
+                    </div>
+                    }
+                    else if (User.IsInRole("User"))
+                    {
+                    <div class="dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            @User.Identity!.Name
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">My Profile</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Logout">Log out</a></li>
+                        </ul>
+                    </div>
+                    }
+                </div>
         </nav>
     </header>
     <div>

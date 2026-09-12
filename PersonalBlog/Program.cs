@@ -56,6 +56,28 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
+using (var scope = app.Services.CreateScope())
+{
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+    string adminEmail = "admin@admin.com";
+    string adminPassword = "Admin@123"; // Change this to a strong password
+
+    // Check if the admin user already exists
+    if (await userManager.FindByEmailAsync(adminEmail) == null)
+    {
+        ApplicationUser adminUser = new ApplicationUser
+        {
+            Email = adminEmail,
+            UserName = adminEmail,
+            EmailConfirmed = true // Set to true since We don't want any email confirmation on the admin obviously
+        };
+
+        await userManager.CreateAsync(adminUser, adminPassword);
+        await userManager.AddToRoleAsync(adminUser, "Admin"); // Assign the "Admin" role to our admin
+    }
+}
+
 app.UseHttpsRedirection();
 
 app.UseRouting();
