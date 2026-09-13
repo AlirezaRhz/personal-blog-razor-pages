@@ -60,3 +60,8 @@ body {
     height: 250px;
     display: block;
 }
+
+.image-height {
+    height: 500px;
+    object-fit: cover;
+}

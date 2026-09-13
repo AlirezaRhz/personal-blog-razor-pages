@@ -31,12 +31,10 @@
         {
             <div class="col">
                 <div class="bg-white card box-shadow article-card-hover">
-                    <img src="@article.ImageUrl" class="card-img-top" alt="@article.Title" />
+                    <img src="@article.ImageUrl" class="card-img-top image-height" alt="@article.Title" />
                     <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <h5 class="card-title">@article.Title</h5>
-                            <p class="text-muted">@PersianDateHelper.ToPersianDate(article.CreatedAt)</p>
-                        </div>
+                        <h5 class="card-title">@article.Title</h5>
+                        <p class="text-muted">@PersianDateHelper.ToPersianDate(article.CreatedAt)</p>
                         <div>
                             @DescriptionToPreviewText(article.Description)
                         </div>
