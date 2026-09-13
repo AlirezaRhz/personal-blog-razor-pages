@@ -3,11 +3,29 @@
 @{
     ViewData["Title"] = "Articles";
 }
+@using System.Text.RegularExpressions
+@using Markdig
 @using PersonalBlog.Helpers
+
+@{
+    var pipeline = new MarkdownPipelineBuilder().DisableHtml().Build();
+
+    string DescriptionToPreviewText(string description)
+    {
+        string fullHtml = Markdown.ToHtml(description, pipeline);
+        string plainText = Regex.Replace(fullHtml, "<.*?>", string.Empty);
+        plainText = System.Net.WebUtility.HtmlDecode(plainText).Trim();
+
+        return plainText.Length > 400
+            ? plainText.Substring(0, 400) + "..."
+            : plainText;
+    }
+}
+
 <!-- Preload homepage background image (cool new thing) -->
 <link rel="preload" as="image" href="/images/homepage-background.jpg" />
 
-<div class="homepage pt-5">
+<div class="homepage py-5">
     <section class="container mx-auto row row-cols-lg-3 g-3">
         @foreach (var article in Model.Articles)
         {
@@ -19,15 +37,10 @@
                             <h5 class="card-title">@article.Title</h5>
                             <p class="text-muted">@PersianDateHelper.ToPersianDate(article.CreatedAt)</p>
                         </div>
-                        @if (article.Description.Length > 400)
-                        {
-                            <p class="card-text">@article.Description.Substring(0, 400)...</p>
-                        }
-                        else
-                        {
-                            <p class="card-text">@article.Description</p>
-                        }
-                        <a class="btn btn-outline-primary" href="/ArticleDetails/@article.Id">View Article</a>
+                        <div>
+                            @DescriptionToPreviewText(article.Description)
+                        </div>
+                        <a class="btn btn-outline-primary d-inline-block mt-4" href="/ArticleDetails/@article.Id">View Article</a>
                     </div>
                 </div>
             </div>

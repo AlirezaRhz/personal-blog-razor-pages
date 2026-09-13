@@ -1,13 +1,17 @@
 ﻿@page "{id:int}"
 @model PersonalBlog.Pages.ArticleDetails.DetailsModel
-@{
-}
 @using PersonalBlog.Helpers
+@using Markdig
+@{
+    var pipeline = new MarkdownPipelineBuilder().DisableHtml().Build();
+}
 
 <section class="container border mt-3 p-4 rounded" style="background-color: #EEEEEE; margin-bottom: 7rem; box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);">
     <a class="btn btn-primary mb-3" href="/">Back</a>
     <img class="w-100" style="height: 600px; object-fit: cover;" src="@Model.Article.ImageUrl" alt="@Model.Article.Title" />
     <h1 class="mt-4 mb-4 fw-bold" style="font-size: 4rem;">@Model.Article.Title</h1>
-    <p class="mb-3">@Model.Article.Description</p>
+    <div class="mb-3">
+        @Html.Raw(Markdown.ToHtml(Model.Article.Description, pipeline))
+    </div>
     <p class="text-muted">@PersianDateHelper.ToPersianDate(Model.Article.CreatedAt)</p>
 </section>

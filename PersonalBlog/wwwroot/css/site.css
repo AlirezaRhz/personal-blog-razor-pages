@@ -53,3 +53,10 @@ body {
     .nav-item-hover:hover {
         color: #00838F !important;
     }
+
+.edit-image {
+    width: 100%;
+    object-fit: cover;
+    height: 250px;
+    display: block;
+}
