@@ -1,0 +1,16 @@
+﻿@page
+@model PersonalBlog.Pages.Admin.DeleteModel
+@{
+}
+
+<div class="container mt-3">
+    <h2>Delete Article</h2>
+    <p>Are you sure you want to delete this article?</p>
+    <strong class="d-inline-block mb-3">@Html.DisplayNameFor(model => model.Article.Title) : </strong>
+    <span>@Html.DisplayFor(model => model.Article.Title)</span>
+    <form method="post">
+        <input type="hidden" asp-for="Article.Id" />
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a class="btn btn-secondary" asp-page="/Admin/Index">Cancel</a>
+    </form>
+</div>
